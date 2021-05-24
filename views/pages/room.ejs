@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>Room: <%= roomName %></title>
+    <%- include('header'); -%>
+    <link rel="stylesheet" href="/static/css/room.css" />
+  </head>
+
+  <body>
+    <%- include('navbar'); -%>
+
+    <ul id="messages"></ul>
+
+    <div id="input-box">
+      <input
+        id="message-field"
+        type="text"
+        placeholder="Send a message here"
+        autocomplete="off"
+      />
+      <button id="submitter">
+        <i class="fa fa-angle-right" aria-hidden="true"></i>
+      </button>
+    </div>
+  </body>
+
+  <%- include('script'); -%>
+  <script src="/static/js/room.js"></script>
+</html>

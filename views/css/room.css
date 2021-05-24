@@ -1,0 +1,92 @@
+:root {
+    --bg-main: #221f22;
+    --bg-secondary: #2d2a2e;
+    --bg-highlight: #4a454c;
+    --highlight-col: #78dcdc;
+}
+
+input {
+    height: 2rem;
+    width: 90%;
+
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 4px;
+
+    margin: 5px;
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+input:focus {
+    outline: none;
+}
+
+input:focus::placeholder {
+    color: transparent;
+}
+
+button {
+    position: relative;
+    /* top: 3px; */
+    height: 2rem;
+    width: 5%;
+
+    color: black;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 4px;
+
+    overflow: hidden;
+
+    transition-duration: 0.4s;
+}
+
+button:hover {
+    color: white;
+    background-color: var(--bg-secondary);
+    border-radius: 4px;
+}
+
+p {
+    margin: 4px;
+}
+
+#input-box {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* border: 2px solid black; */
+    background-color: #4a454c;
+
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+#messages {
+    height: 82%;
+    overflow: auto;
+
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.msg {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    border-bottom: 2px solid #555;
+    border-radius: 2px;
+}
+
+.msg:hover {
+    background-color: #ddd;
+}

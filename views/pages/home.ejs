@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title>Look at available rooms</title>
+    <%- include('header'); -%>
+  </head>
+
+  <body>
+    <%- include('navbar'); -%>
+
+    <h2 style="text-align: center">Available roooms:</h2>
+    <div class="container">
+      <table>
+        <tr>
+          <th>Room Name</th>
+          <th># of members</th>
+          <th>Time since last message</th>
+        </tr>
+
+        <tr>
+          <td><a href="/room/main">Main</a></td>
+          <td>0</td>
+          <td>00:00:00</td>
+        </tr>
+      </table>
+    </div>
+  </body>
+
+  <%- include('script'); -%>
+  <script src="/static/js/home.js"></script>
+</html>

@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <title>Create a username</title>
+    <%- include("header") -%>
+    <link rel="stylesheet" type="text/css" href="/static/css/login.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div>
+        <h1>Login page</h1>
+        <h3>Create a username to start chatting</h3>
+
+        <div id="input-box">
+          <label for="login-box">Username</label>
+          <input id="login-box" type="text" /><button id="">Change</button>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    const createLogin = (e) => {
+      const input = document.getElementById("login-box");
+
+      if (input.value === "") {
+        alert("Username cannot be blank");
+        return;
+      }
+
+      sessionStorage.username = input.value;
+      window.location.href = "/home";
+    };
+
+    document.querySelector("button").addEventListener("click", createLogin);
+
+    document.getElementById("login-box").addEventListener("keydown", (e) => {
+      const input = document.getElementById("login-box");
+
+      if (e.keyCode != 13) {
+        return;
+      }
+
+      if (input.value === "") {
+        alert("Username cannot be blank");
+        return;
+      }
+
+      sessionStorage.username = input.value;
+      window.location.href = "/home";
+    });
+  </script>
+</html>
