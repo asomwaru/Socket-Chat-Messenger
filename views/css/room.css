@@ -90,3 +90,11 @@ p {
 .msg:hover {
     background-color: #ddd;
 }
+
+.msg:hover .date {
+    visibility: visible;
+}
+
+.date {
+    visibility: hidden;
+}

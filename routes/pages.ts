@@ -1,6 +1,15 @@
-import express from "express";
+import { Router } from "express";
+// import { database } from "./queries";
 
-export const router: express.Router = express.Router();
+export const router: Router = Router();
+
+// accessing past messages
+
+router.get("/room/:room", (req, res) => {
+  res.render("pages/room.ejs", { roomName: req.params.room });
+});
+
+// page redirects
 
 router.get("/room/:room", (req, res) => {
   res.render("pages/room.ejs", { roomName: req.params.room });
