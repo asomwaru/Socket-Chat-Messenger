@@ -1,18 +1,36 @@
 import { Router } from "express";
-import { active_rooms, is_available } from "./queries";
+import {
+  active_rooms,
+  is_available,
+  room_exists,
+  create_room,
+  recent_messages,
+} from "./queries";
 
 export const router: Router = Router();
 
 // page redirects
 
-router.get("/room/:room", (req, res) => {
-  res.render("pages/room.ejs", { roomName: req.params.room });
+router.get("/room/:room", async (req, res) => {
+  let recent = await recent_messages(req.params.room, new Date());
+
+  res.render("pages/room.ejs", { roomName: req.params.room, messages: recent });
 });
 
 router.get("/room/:room/available", async (req, res) => {
-  let open: boolean = await is_available(req.params.room);
+  let exist: boolean = await room_exists(req.params.room);
 
-  res.send({ open });
+  if (!exist) {
+    res.send({ open: null });
+  } else {
+    let open: boolean = await is_available(req.params.room);
+    res.send({ open });
+  }
+});
+
+router.get("/room/:room/create", async (req, res) => {
+  create_room(req.params.room);
+  res.sendStatus(200);
 });
 
 router.get("/", async (_, res) => {

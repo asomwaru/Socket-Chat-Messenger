@@ -17,7 +17,7 @@
       <table>
         <tr>
           <th>Room Name</th>
-          <th># of members</th>
+          <th>Online members</th>
         </tr>
 
         <% rooms.forEach(function(room){ %>
@@ -34,13 +34,23 @@
 
   <%- include('script'); -%>
   <script>
-    document.getElementById("create").addEventListener("click", async () => {
+    $("#create").on("click", async () => {
       let room_name = prompt("Give a name for the room: ");
 
       let res = await fetch(`/room/${room_name}/available`);
       let answer = await res.json();
 
-      if (answer.open) window.location.href = `/room/${room_name}`;
+      console.log(answer);
+
+      if (answer.open == null) {
+        let temp = await fetch(`/room/${room_name}/create`).then(() => {
+          window.location.href = `/room/${room_name}`;
+        });
+      } else if (answer.open) {
+        window.location.href = `/room/${room_name}`;
+      } else {
+        alert(`${room_name} is not available`);
+      }
     });
   </script>
 </html>

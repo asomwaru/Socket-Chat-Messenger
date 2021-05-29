@@ -56,6 +56,14 @@ export async function update_rooms(room_name: string, value: number) {
   await database.query(query, [value, room_name]);
 }
 
+export async function create_room(room_name: string) {
+  const query: string = `INSERT INTO rooms(room_name, users) VALUES($1::text, 0)`;
+
+  await database.query(query, [room_name]);
+}
+
+// Getter functions
+
 export async function recent_messages(room_name: string, date: Date) {
   let info = await get_ID(room_name).then(async (id) => {
     const query: string = `SELECT * FROM messages WHERE room_id=$1::int AND sent_date<$2::timestamp LIMIT 15;`;
@@ -71,6 +79,14 @@ export async function is_available(room_name: string) {
 
   let val: boolean =
     (await database.query(query, [room_name])).rows[0].users == 0;
+
+  return val;
+}
+
+export async function room_exists(room_name: string) {
+  const query: string = `SELECT room_name FROM rooms WHERE room_name=$1::text`;
+
+  let val: boolean = (await database.query(query, [room_name])).rows.length > 0;
 
   return val;
 }

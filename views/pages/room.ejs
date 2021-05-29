@@ -8,7 +8,14 @@
   <body>
     <%- include('navbar'); -%>
 
-    <ul id="messages"></ul>
+    <ul id="messages">
+      <% messages.forEach(function(msg){ %>
+      <div class="msg">
+        <p><%= msg.username %>:</p>
+        <p><%= msg.msg %></p>
+      </div>
+      <% }); %>
+    </ul>
 
     <div id="input-box">
       <input

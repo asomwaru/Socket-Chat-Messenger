@@ -40,8 +40,6 @@ io.sockets.on("connection", (socket) => {
     room = room_name;
 
     await db.update_rooms(room_name, 1);
-
-    const td = new Date("2021-05-28 18:16:27.965");
   });
 
   socket.on("send", ({ room_name, msg, username }) => {
