@@ -26,7 +26,7 @@ export const database = new Client({
 // Database helper functions
 
 export async function active_rooms() {
-  const query: string = `SELECT room_name FROM rooms WHERE users>0;`;
+  const query: string = `SELECT * FROM rooms WHERE users>0;`;
 
   return (await database.query(query, [])).rows;
 }
@@ -60,10 +60,17 @@ export async function recent_messages(room_name: string, date: Date) {
   let info = await get_ID(room_name).then(async (id) => {
     const query: string = `SELECT * FROM messages WHERE room_id=$1::int AND sent_date<$2::timestamp LIMIT 15;`;
 
-    let temp = (await database.query(query, [id, date])).rows;
-
-    return temp;
+    return (await database.query(query, [id, date])).rows;
   });
 
   return info;
+}
+
+export async function is_available(room_name: string) {
+  const query: string = `SELECT users FROM rooms WHERE room_name=$1::text`;
+
+  let val: boolean =
+    (await database.query(query, [room_name])).rows[0].users == 0;
+
+  return val;
 }

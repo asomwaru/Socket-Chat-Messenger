@@ -42,8 +42,6 @@ io.sockets.on("connection", (socket) => {
     await db.update_rooms(room_name, 1);
 
     const td = new Date("2021-05-28 18:16:27.965");
-
-    console.log(await db.recent_messages("main", td));
   });
 
   socket.on("send", ({ room_name, msg, username }) => {
@@ -68,6 +66,10 @@ io.sockets.on("connection", (socket) => {
   socket.on("disconnect", async () => {
     await db.update_rooms(room, -1);
   });
+
+  // socket.on("disconnecting", async () => {
+  //   await db.update_rooms(room, -1);
+  // });
 });
 
 server.listen(port, () => {

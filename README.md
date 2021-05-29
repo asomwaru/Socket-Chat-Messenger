@@ -2,7 +2,7 @@
 
 This is a chat messenger using Node.js and Typescript as the server backend. The web sockets were handled with the socket.io library. PostgreSQL was used to save messages and keep up with chat room data like the amount of people in a room, who is specifically in the room, etc. This was a simple personal project so there are a lot of things that could have been done better.
 
-## Features
+## Current Features
 
 - Simple messaging like IRC
 - Saved chat logs

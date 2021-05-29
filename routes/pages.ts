@@ -1,13 +1,7 @@
 import { Router } from "express";
-// import { database } from "./queries";
+import { active_rooms, is_available } from "./queries";
 
 export const router: Router = Router();
-
-// accessing past messages
-
-router.get("/room/:room", (req, res) => {
-  res.render("pages/room.ejs", { roomName: req.params.room });
-});
 
 // page redirects
 
@@ -15,8 +9,16 @@ router.get("/room/:room", (req, res) => {
   res.render("pages/room.ejs", { roomName: req.params.room });
 });
 
-router.get("/", (_, res) => {
-  res.render("pages/home.ejs", { roomName: null });
+router.get("/room/:room/available", async (req, res) => {
+  let open: boolean = await is_available(req.params.room);
+
+  res.send({ open });
+});
+
+router.get("/", async (_, res) => {
+  let available = await active_rooms();
+
+  res.render("pages/home.ejs", { roomName: null, rooms: available });
 });
 
 router.get("/home", (_, res) => {

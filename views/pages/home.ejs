@@ -7,24 +7,40 @@
   <body>
     <%- include('navbar'); -%>
 
-    <h2 style="text-align: center">Available roooms:</h2>
+    <h2 style="text-align: center">Available rooms:</h2>
+
+    <div id="options">
+      <button id="create">Create a room</button>
+    </div>
+
     <div class="container">
       <table>
         <tr>
           <th>Room Name</th>
           <th># of members</th>
-          <th>Time since last message</th>
         </tr>
 
+        <% rooms.forEach(function(room){ %>
         <tr>
-          <td><a href="/room/main">Main</a></td>
-          <td>0</td>
-          <td>00:00:00</td>
+          <td>
+            <a href="/room/<%= room.room_name %>"><%= room.room_name %></a>
+          </td>
+          <td><%= room.users %></td>
         </tr>
+        <% }); %>
       </table>
     </div>
   </body>
 
   <%- include('script'); -%>
-  <script src="/static/js/home.js"></script>
+  <script>
+    document.getElementById("create").addEventListener("click", async () => {
+      let room_name = prompt("Give a name for the room: ");
+
+      let res = await fetch(`/room/${room_name}/available`);
+      let answer = await res.json();
+
+      if (answer.open) window.location.href = `/room/${room_name}`;
+    });
+  </script>
 </html>
