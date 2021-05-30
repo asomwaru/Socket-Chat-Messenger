@@ -1,6 +1,31 @@
 # Chat messenger using Socket.io
 
-This is a chat messenger using Node.js and Typescript as the server backend. The web sockets were handled with the socket.io library. PostgreSQL was used to save messages and keep up with chat room data like the amount of people in a room, who is specifically in the room, etc. This was a simple personal project so there are a lot of things that could have been done better.
+This is a simple chat messenger using Node.js and Typescript as the server backend. The web sockets were handled with the socket.io library. PostgreSQL was used to save messages and keep up with chat room data like the amount of people in a room, who is specifically in the room, etc. This was a simple personal project that I wanted to do.
+
+## Building the project
+
+Docker was used in this project as a learning experience. I wanted to learn containerization by using Docker and Docker Compose.
+
+_Before running the container, check that the variables in the `.env` file are the same in the `docker-compose.yml`_
+
+```
+DB_USERNAME="postgres"
+DB_PASSWORD="postgres"
+DB_DATABASE="messenger"
+DB_URL="db"
+DB_PORT=5432
+PORT=8080
+```
+
+After verifying the `.env` and `docker-compose.yml` files, run the command:
+
+```
+docker-compose up -d
+```
+
+and wait a few seconds for the containers to download and run.
+
+From there, just connect to the website which should be located on `localhost:${your_env_port}`.
 
 ## Current Features
 
@@ -9,12 +34,12 @@ This is a chat messenger using Node.js and Typescript as the server backend. The
 
 ## Possible features
 
-- Saving usernames and passwords
-  - _Your username is not your personal username meaning that someone can use your username as well_
+- Saved usernames with passwords
 - Private/hidden rooms with passwords
 - Direct links to rooms
 - Some security features
-- Have time dates adjust to user's timezone
+- List timezones and have them adjust per user
+- Spam protection
 
 ## Technologies used
 
@@ -25,17 +50,16 @@ This is a chat messenger using Node.js and Typescript as the server backend. The
 - Socket.io library
 - PostgreSQL
 - Docker
-- Docker compose
+- Docker Compose
 - Yarn
 
 ## PostgreSQL Database
 
-_I do not have much experience on how database organization/design is supposed to be._
+There are two tables used for the PostgreSQL database. The schema looks something like this:
 
-There is a main database that holds all of the rooms with a few attributes. Those attributes are the room name, amount of people in the room, and a boolean value for if a room is active or not. The room name points to another database that has the individual messages saved. The tables that are referred from the room names have a message, a timestamp, and who said that message.
+![schema](assets/schema.png)
 
 ## Issues or Possible Ones
 
-- Altering the localStorage can possibly cause issues since that's how the username is being saved
-- Rework the database to be more efficient (Ex: using id's for rooms, messages, etc.)
+- Altering the sessionStorage can possibly cause issues since that's how the username is being saved
 - Encrypt text for privacy reasons

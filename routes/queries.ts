@@ -18,7 +18,7 @@ export interface Room {
 export const database = new Client({
   user: process.env.DB_USERNAME,
   password: `${process.env.DB_PASSWORD}`,
-  host: process.env.DB_URL,
+  host: process.env.DB_URL || undefined,
   database: process.env.DB_DATABASE,
   port: parseInt(`${process.env.DB_PORT}`),
 });

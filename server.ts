@@ -1,15 +1,16 @@
 import path from "path";
 import cors from "cors";
-import dotenv from "dotenv";
 import express from "express";
 import { Server } from "http";
+import { platform } from "os";
+import { config } from "dotenv";
 import { urlencoded } from "body-parser";
 import { Server as ioserver } from "socket.io";
 
 import * as db from "./routes/queries";
 import { router as pages } from "./routes/pages";
 
-dotenv.config();
+config();
 
 const port: number = parseInt(`${process.env.PORT}`) | 8080;
 const app = express();
@@ -22,7 +23,19 @@ database
   .then(() => console.log("Connected to the database"))
   .catch((err) => console.log(err));
 
-app.use("/static", express.static(path.join(__dirname, "views")));
+//
+let root_dir: string = "";
+if (platform() === "win32") {
+  root_dir = path.join(__dirname).includes("dist")
+    ? path.join(__dirname, "..\\views")
+    : path.join(__dirname, "\\views");
+} else {
+  root_dir = path.join(__dirname).includes("dist")
+    ? path.join(__dirname, "../views")
+    : path.join(__dirname, "/views");
+}
+
+app.use("/static", express.static(root_dir));
 app.use(urlencoded({ extended: false }));
 app.set("view engine", "ejs");
 app.use(cors());
@@ -64,12 +77,9 @@ io.sockets.on("connection", (socket) => {
   socket.on("disconnect", async () => {
     await db.update_rooms(room, -1);
   });
-
-  // socket.on("disconnecting", async () => {
-  //   await db.update_rooms(room, -1);
-  // });
 });
 
 server.listen(port, () => {
   console.log(`Listening on port ${port}`);
+  // await db.connect_db();
 });
